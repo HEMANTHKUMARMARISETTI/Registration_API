@@ -1,0 +1,164 @@
+openapi: 3.0.2
+info:
+  title: MICRO SERVICES CRUD OPERATIONS
+  version: '1.0'
+servers:
+  - url: http://localhost:8000
+  - url: http://localhost:9000
+
+paths:
+  /createuserProfile:
+    post:
+      tags:
+        - user
+      description: Create user
+      responses:
+        '201':
+          description: Create user successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Create user failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      requestBody:
+        description: User data for creation
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BODYDATA'
+  /getuserdetails:
+    get:
+      tags:
+        - user
+      description: Get user details
+      responses:
+        '200':
+          description: Get user details successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BODYDATA'
+        '400':
+          description: Get user details failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+  /getuserbyemail/{email}:
+    get:
+      tags:
+        - user
+      description: Get user details
+      parameters:
+        - name: email
+          in: path
+          description: ID of the user to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Get user details successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BODYDATA'
+        '400':
+          description: Get user details failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+  /Updateuser/{email}:
+    put:
+      tags:
+        - user
+      description: Update user
+      parameters:
+        - name: email
+          in: path
+          description: ID of the user to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Update user successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Update user failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      requestBody:
+        description: User data for updating
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BODYDATA'
+  /deleteuser/{email}:
+    delete:
+      tags:
+        - user
+      description: Delete user
+      parameters:
+        - name: email
+          in: path
+          description: ID of the user to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Delete user successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Delete user failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+
+components:
+  schemas:
+    ApiResponse:
+      type: object
+      description: Response in status code
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+
+    BODYDATA:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string  
+        phonenumber:
+          type: integer
+        password:
+          type: string
